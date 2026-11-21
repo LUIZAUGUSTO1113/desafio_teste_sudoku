@@ -1,3 +1,4 @@
 module.exports = {
-  ...require('./validacao'),
+  ...require("./validacao"),
+  ...require("./solucionador"),
 };
