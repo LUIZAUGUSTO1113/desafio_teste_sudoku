@@ -50,6 +50,17 @@ function violacoesDoEixo(sequencias, eixo) {
       violacoes.push({ regra: "equilibrio", eixo, indice });
     if (temTrio(celulas)) violacoes.push({ regra: "trio", eixo, indice });
   });
+
+  const completas = sequencias.map((celulas) =>
+    celulas.includes(null) ? null : celulas.join(""),
+  );
+  for (let i = 0; i < TAMANHO; i++) {
+    for (let j = i + 1; j < TAMANHO; j++) {
+      if (completas[i] !== null && completas[i] === completas[j]) {
+        violacoes.push({ regra: "duplicada", eixo, indices: [i, j] });
+      }
+    }
+  }
   return violacoes;
 }
 
