@@ -31,10 +31,20 @@ describe("Solucionador", () => {
   });
 
   test("CT35 [RN-05] grade com trio tem 0 soluções e resolver devolve null", () => {
-    const grade = gradeDe(["000..."]);
+    const parcial = gradeDe(["000..."]);
+    const completa = gradeDe([
+      "010111",
+      "001101",
+      "100110",
+      "110010",
+      "011001",
+      "101100",
+    ]);
 
-    expect(contarSolucoes(grade)).toBe(0);
-    expect(resolver(grade)).toBeNull();
+    expect(contarSolucoes(parcial)).toBe(0);
+    expect(contarSolucoes(completa)).toBe(0);
+    expect(resolver(parcial)).toBeNull();
+    expect(resolver(completa)).toBeNull();
   });
 
   test("CT36 [RN-03, RN-08] resolver preenche as células vazias de P1 e chega em S1", () => {
