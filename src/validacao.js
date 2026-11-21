@@ -6,11 +6,11 @@ function criarGradeVazia() {
 
 function conferirFormato(grade) {
   if (!Array.isArray(grade) || grade.length !== TAMANHO) {
-    throw new Error('A grade precisa ter 6 linhas');
+    throw new Error("A grade precisa ter 6 linhas");
   }
   for (const linha of grade) {
     if (!Array.isArray(linha) || linha.length !== TAMANHO) {
-      throw new Error('Cada linha precisa ter 6 células');
+      throw new Error("Cada linha precisa ter 6 células");
     }
     for (const celula of linha) {
       if (celula !== null && celula !== 0 && celula !== 1) {
@@ -20,9 +20,46 @@ function conferirFormato(grade) {
   }
 }
 
+function colunasDe(grade) {
+  return grade[0].map((_, coluna) => grade.map((linha) => linha[coluna]));
+}
+
+function temTrio(celulas) {
+  for (let i = 0; i + 2 < celulas.length; i++) {
+    if (
+      celulas[i] !== null &&
+      celulas[i] === celulas[i + 1] &&
+      celulas[i] === celulas[i + 2]
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function passaDoLimite(celulas) {
+  const uns = celulas.filter((c) => c === 1).length;
+  const zeros = celulas.filter((c) => c === 0).length;
+  return uns > TAMANHO / 2 || zeros > TAMANHO / 2;
+}
+
+function violacoesDoEixo(sequencias, eixo) {
+  const violacoes = [];
+  sequencias.forEach((celulas, indice) => {
+    if (passaDoLimite(celulas))
+      violacoes.push({ regra: "equilibrio", eixo, indice });
+    if (temTrio(celulas)) violacoes.push({ regra: "trio", eixo, indice });
+  });
+  return violacoes;
+}
+
 function validarGrade(grade) {
   conferirFormato(grade);
-  return { valida: true, violacoes: [] };
+  const violacoes = [
+    ...violacoesDoEixo(grade, "linha"),
+    ...violacoesDoEixo(colunasDe(grade), "coluna"),
+  ];
+  return { valida: violacoes.length === 0, violacoes };
 }
 
 function gradeCompleta(grade) {
