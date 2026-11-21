@@ -1,0 +1,15 @@
+{
+  "name": "desafio_teste_sudoku",
+  "version": "1.0.0",
+  "description": "Casos de teste em Jest para o Sudoku binário 6 x 6",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
