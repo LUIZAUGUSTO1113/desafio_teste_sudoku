@@ -55,13 +55,15 @@ describe("Solucionador", () => {
   });
 
   test("CT37 [RN-08] resolver devolve uma grade nova e não altera a recebida", () => {
-    const grade = gradeDe(P1);
-    const solucao = resolver(grade);
+    const puzzle = gradeDe(P1);
+    const completa = gradeDe(S1);
 
-    expect(solucao).not.toBe(grade);
-    expect(grade).toEqual(gradeDe(P1));
+    const solucao = resolver(puzzle);
+    const copia = resolver(completa);
+    copia[0][0] = 1;
 
-    solucao[0][0] = null;
-    expect(grade).toEqual(gradeDe(P1));
+    expect(solucao).not.toBe(puzzle);
+    expect(puzzle).toEqual(gradeDe(P1));
+    expect(completa).toEqual(gradeDe(S1));
   });
 });
